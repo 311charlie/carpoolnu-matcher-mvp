@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { matchList } from "./data/sample_carpool_data";
+import { matchList, type Match } from "./data/sample_carpool_data";
 import MatchCard from "./components/MatchCard";
+import ListResults from "./components/ListResults";
 
 export default function App() {
   // tracks the current index in the match list
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // tracks approved and rejected matches
-  const [approvedMatches, setApprovedMatches] = useState<typeof matchList>([]);
-  const [rejectedMatches, setRejectedMatches] = useState<typeof matchList>([]);
+  const [approvedMatches, setApprovedMatches] = useState<Match[]>([]);
+  const [rejectedMatches, setRejectedMatches] = useState<Match[]>([]);
 
   // increases index if current index is less than the list length
   const next = () =>
@@ -16,13 +17,13 @@ export default function App() {
       i + 1 < matchList.length ? i + 1 : matchList.length
     );
 
-  // approve current match then move to next
+  // approve current match by adding to approve list, then move to next match
   const onApprove = () => {
     setApprovedMatches((prev) => [...prev, matchList[currentIndex]]);
     next();
   };
 
-  // reject current match then move to next
+  // reject current match by adding to reject list, then move to next match
   const onReject = () => {
     setRejectedMatches((prev) => [...prev, matchList[currentIndex]]);
     next();
@@ -51,38 +52,18 @@ export default function App() {
           <h2 className="flex items-center justify-center flex-1 text-2xl font-semibold text-gray-800">
             🎉 No More Matches
           </h2>
-
           {/* approved matches */}
-          <div>
-            <h3 className="text-lg font-semibold text-green-600">Approved:</h3>
-            {approvedMatches.length ? (
-              <ul className="pl-5 list-disc">
-                {approvedMatches.map((match, i) => (
-                  <li key={i}>
-                    {match.firstName} {match.lastName}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500">none</p>
-            )}
-          </div>
-
+          <ListResults
+            title="Approved"
+            items={approvedMatches}
+            colorClass="text-green-600"
+          />
           {/* rejected matches */}
-          <div>
-            <h3 className="text-lg font-semibold text-red-600">Rejected:</h3>
-            {rejectedMatches.length ? (
-              <ul className="pl-5 list-disc">
-                {rejectedMatches.map((match, i) => (
-                  <li key={i}>
-                    {match.firstName} {match.lastName}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500">none</p>
-            )}
-          </div>
+          <ListResults
+            title="Rejected"
+            items={rejectedMatches}
+            colorClass="text-red-600"
+          />
         </div>
       ) : (
         <MatchCard
