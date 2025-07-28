@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { matchList, type Match } from "./data/sample_carpool_data";
+import { type Match, matchList  } from "./data/sample_carpool_data";
 import MatchCard from "./components/MatchCard";
 import ListResults from "./components/ListResults";
 

@@ -1,4 +1,4 @@
-import type { Match } from "../data/sample_carpool_data";
+import { type Match } from "../data/sample_carpool_data";
 
 type ListResultsProps = {
   title: string; // the title of the list
