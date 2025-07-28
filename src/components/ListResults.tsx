@@ -6,6 +6,7 @@ type ListResultsProps = {
   colorClass: string; // the color of the title
 };
 
+// represents a list that contains the matches that were either approved or rejected by the user
 export default function ListResults({
   title,
   items,
